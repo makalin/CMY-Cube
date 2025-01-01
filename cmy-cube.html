@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CMY Cube</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+    <script async src="https://unpkg.com/es-module-shims/dist/es-module-shims.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.159.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.159.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        // Set up scene, camera, and renderer
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Enable shadow mapping
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+        // Add orbit controls
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.screenSpacePanning = false;
+        controls.minDistance = 2;
+        controls.maxDistance = 10;
+
+        // Create cube geometry
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        
+        // Create materials with increased transparency
+        const materials = [
+            new THREE.MeshPhysicalMaterial({ 
+                color: 0x00FFFF, 
+                transparent: true, 
+                opacity: 0.3,
+                roughness: 0.1,
+                metalness: 0.1,
+                side: THREE.DoubleSide
+            }), // Cyan
+            new THREE.MeshPhysicalMaterial({ 
+                color: 0x00FFFF, 
+                transparent: true, 
+                opacity: 0.3,
+                roughness: 0.1,
+                metalness: 0.1,
+                side: THREE.DoubleSide
+            }), // Cyan
+            new THREE.MeshPhysicalMaterial({ 
+                color: 0xFF00FF, 
+                transparent: true, 
+                opacity: 0.3,
+                roughness: 0.1,
+                metalness: 0.1,
+                side: THREE.DoubleSide
+            }), // Magenta
+            new THREE.MeshPhysicalMaterial({ 
+                color: 0xFF00FF, 
+                transparent: true, 
+                opacity: 0.3,
+                roughness: 0.1,
+                metalness: 0.1,
+                side: THREE.DoubleSide
+            }), // Magenta
+            new THREE.MeshPhysicalMaterial({ 
+                color: 0xFFFF00, 
+                transparent: true, 
+                opacity: 0.3,
+                roughness: 0.1,
+                metalness: 0.1,
+                side: THREE.DoubleSide
+            }), // Yellow
+            new THREE.MeshPhysicalMaterial({ 
+                color: 0xFFFF00, 
+                transparent: true, 
+                opacity: 0.3,
+                roughness: 0.1,
+                metalness: 0.1,
+                side: THREE.DoubleSide
+            })  // Yellow
+        ];
+
+        // Create cube with materials
+        const cube = new THREE.Mesh(geometry, materials);
+        cube.castShadow = true;
+        cube.receiveShadow = true;
+        scene.add(cube);
+
+        // Add ambient light
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        // Add directional lights from different angles
+        const createDirectionalLight = (x, y, z, intensity) => {
+            const light = new THREE.DirectionalLight(0xffffff, intensity);
+            light.position.set(x, y, z);
+            light.castShadow = true;
+            light.shadow.mapSize.width = 512;
+            light.shadow.mapSize.height = 512;
+            light.shadow.camera.near = 0.5;
+            light.shadow.camera.far = 500;
+            return light;
+        };
+
+        const lights = [
+            createDirectionalLight(5, 5, 5, 0.8),
+            createDirectionalLight(-5, 5, -5, 0.6),
+            createDirectionalLight(0, -5, 0, 0.4)
+        ];
+        lights.forEach(light => scene.add(light));
+
+        // Position camera
+        camera.position.z = 3;
+
+        // Animation function
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // Handle window resizing
+        window.addEventListener('resize', onWindowResize, false);
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // Start animation
+        animate();
+    </script>
+</body>
+</html>
