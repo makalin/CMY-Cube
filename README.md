@@ -2,6 +2,10 @@
 
 A 3D visualization of a CMY cube built using [Three.js](https://threejs.org/). This project demonstrates rendering a cube with transparent materials representing the CMY (Cyan, Magenta, Yellow) color model.
 
+## Preview
+
+[Live](https://makalin.github.io/CMY-Cube/cmy-cube.html)
+
 ## Features
 
 - **Three.js**: Leveraging the power of Three.js for 3D rendering.
