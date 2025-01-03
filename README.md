@@ -4,7 +4,7 @@ A 3D visualization of a CMY cube built using [Three.js](https://threejs.org/). T
 
 ## Preview
 
-<a href="https://makalin.github.io/CMY-Cube/cmy-cube.html" target="_blank">Live Preview</a>
+Live Preview: <a href="https://makalin.github.io/CMY-Cube/cmy-cube.html" target="_blank">https://makalin.github.io/CMY-Cube/cmy-cube.html</a>
 
 ## Features
 
