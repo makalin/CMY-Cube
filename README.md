@@ -19,8 +19,8 @@ Live Preview: <a href="https://makalin.github.io/CMY-Cube/cmy-cube.html" target=
 Clone the repository and open the `cmy-cube.html` file in a modern browser.
 
 ```bash
-git clone https://github.com/your-username/cmy-cube-visualization.git
-cd cmy-cube-visualization
+git clone https://github.com/makalin/CMY-Cube.git
+cd CMY-Cube
 ```
 
 ## Usage
